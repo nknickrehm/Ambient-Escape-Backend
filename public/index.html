@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Aktive Spieler</h2>
+    <table></table>
+    <h2>Spieler hinzufügen</h2>
+    <form enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+    </form>
+    <button onclick="submit()">Hinzufügen</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

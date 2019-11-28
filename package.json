@@ -1,0 +1,29 @@
+{
+  "name": "AmbientComputingBackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianp1/AmbientComputingBackend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ianp1/AmbientComputingBackend/issues"
+  },
+  "homepage": "https://github.com/ianp1/AmbientComputingBackend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "http": "0.0.0",
+    "ip": "^1.1.5",
+    "socket.io": "^2.3.0"
+  }
+}
