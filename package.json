@@ -9,7 +9,8 @@
     "seed:database": "node database/seeder.js",
     "start": "node index.js",
     "debug": "node --inspect-brk=9229 index.js",
-    "dev": "nodemon --exec \"npm run debug\""
+    "dev": "nodemon --exec \"npm run debug\"",
+    "apidocs": "shx rm -rf docs/api && apidoc -i routes -o docs/api"
   },
   "repository": {
     "type": "git",
@@ -35,5 +36,9 @@
     "pg": "^7.14.0",
     "postgres-migrations": "^3.0.2",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "apidoc": "^0.18.0",
+    "shx": "^0.3.2"
   }
 }
