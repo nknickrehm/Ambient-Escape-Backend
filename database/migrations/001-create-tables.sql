@@ -61,4 +61,10 @@ CREATE TABLE Activity
   Humidity FLOAT,
   PRIMARY KEY
   (ActivityID)
-)
+);
+
+INSERT INTO Game (
+  Status
+) VALUES (
+  'NOT STARTED'
+);

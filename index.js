@@ -1,3 +1,6 @@
+require("dotenv").config();
+
+
 const express = require("express");
 const app = express();
 global.app = app;
@@ -6,6 +9,16 @@ const server = require("http").Server(app);
 global.server = server;
 const io = require("socket.io")(server);
 global.io = io;
+
+const Pool = require('pg').Pool;
+const pool = new Pool({
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    host: process.env.PGHOST,
+    port: parseInt(process.env.PGPORT),
+    database: process.env.PGDATABASE
+});
+global.pool = pool;
 
 const bodyParser = require("body-parser");
 const ip = require("ip");

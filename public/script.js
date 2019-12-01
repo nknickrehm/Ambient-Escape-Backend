@@ -2,11 +2,13 @@ var socket = io(); // connection to the socket
 
 socket.on("players", (playerData) => {
     console.log("Socket response:", playerData);
+    addPlayerToList(playerData);
 })
 
 fetch("/players/")
     .then(res => res.json())
     .then(players => {
+        console.log("players fetched: ", players);
         players.forEach(player => {
             addPlayerToList(player);
         });
@@ -23,7 +25,6 @@ function submit() {
         .then(res => res.json())
         .then(player => {
             console.log("REST response:", player);
-            addPlayerToList(player);
         })
 }
 
@@ -31,6 +32,6 @@ function addPlayerToList(player) {
     document.querySelector("table").innerHTML += `
         <tr>
             <td>${player.name}</td>
-            <td>(${player.email})</td>
+            <td>(${player.mail})</td>
         </tr>`;
 }

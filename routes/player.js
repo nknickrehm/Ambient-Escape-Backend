@@ -6,16 +6,23 @@ var players = [];
 
 /* GET REQUESTS */
 router.route("/").get((req, res) => {
-    res.send(players);
+    global.pool.query("SELECT * FROM Player", (error, results) => {
+        if (error) {
+            throw error;
+        }
+        res.status(200).json(results.rows);
+    });
 });
 
 /* POST REQUESTS */
 router.route("/").post((req, res) => {
-    players.push(req.body);
-
-    console.log("emitting ", req);
-    global.io.emit("players", req.body); // send socket message
-    res.send(req.body); // send response for this request
+    global.pool.query("INSERT INTO Player (GameID, Name, Mail, Status) VALUES (1, $1, $2, 'test')", [req.body.name, req.body.mail], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        global.io.emit("players", req.body); // send socket message
+        res.status(201).json({"id":results.insertId});
+    });
 });
 
 
