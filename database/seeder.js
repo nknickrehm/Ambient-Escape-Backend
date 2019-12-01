@@ -13,8 +13,8 @@ const createPlayerQuery = {
 
 const createRiddleQuery = {
   text:
-    "INSERT INTO Riddle (GameID, Progress, Description, Status) VALUES ($1, $2, $3, $4)",
-  values: [1, 0, "A", "WAITING"]
+    "INSERT INTO Riddle (GameID, Progress, Description, Status) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8)",
+  values: [1, 0, "A", "WAITING", 1, 0, "B", "WAITING"]
 };
 
 seed();

@@ -23,7 +23,9 @@ global.pool = pool;
 const bodyParser = require("body-parser");
 const ip = require("ip");
 const colors = require("colors"); // allows for using colors as attribute of strings
+
 const playerRoutes = require('./routes/player');
+const codeRoutes = require('./routes/code');
 
 const fileUpload = require("express-fileupload");
 
@@ -32,6 +34,7 @@ app.use(bodyParser.json());
 app.use(fileUpload());
 
 app.use('/players/', playerRoutes);
+app.use('/codes/', codeRoutes);
 
 
  

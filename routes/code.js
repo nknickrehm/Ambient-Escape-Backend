@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET REQUESTS */
 router.route("/").get((req, res) => {
-    global.pool.query("SELECT * FROM Player", (error, results) => {
+    global.pool.query("SELECT * FROM Code", (error, results) => {
         if (error) {
             throw error;
         }
@@ -14,11 +14,12 @@ router.route("/").get((req, res) => {
 
 /* POST REQUESTS */
 router.route("/").post((req, res) => {
-    global.pool.query("INSERT INTO Player (GameID, Name, Mail, Status) VALUES (1, $1, $2, 'test')", [req.body.name, req.body.mail], (error, results) => {
+    global.pool.query("INSERT INTO Code (SenderRiddleID, ReceiverRiddleID, key, value, status) VALUES ($1, $2, $3, $4, $5)", 
+            [req.body.sender, req.body.receiver, req.body.key, req.body.value, req.body.status], (error, results) => {
         if (error) {
             throw error;
         }
-        global.io.emit("players", req.body); // send socket message
+        global.io.emit("codes", req.body); // send socket message
         res.status(201).json({"id":results.insertId});
     });
 });
