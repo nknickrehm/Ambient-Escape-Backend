@@ -52,6 +52,7 @@ router.route("/").get((req, res) => {
  * @apiParam {String} mail the mail of the player
  *
  * @apiParamExample {json} Request-Example:
+ *    POST /players/
 {
 	"name": "Vorname",
 	"mail": "test@test.de"

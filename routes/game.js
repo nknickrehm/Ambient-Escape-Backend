@@ -81,6 +81,7 @@ router.route("/").post((req, res) => {
  * @apiParam {String} status is the new status of this game
  *
  * @apiParamExample {json} Request-Example:
+ *    PATCH /games/1/Status
 {
 	"status": "READY"
 }

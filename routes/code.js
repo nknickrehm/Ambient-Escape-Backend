@@ -57,6 +57,7 @@ router.route("/").get((req, res) => {
  * @apiParam {String} status is the current status of this code
  *
  * @apiParamExample {json} Request-Example:
+ *    POST /codes/
 {
 	"sender": 1,
 	"receiver": 2,
@@ -88,6 +89,43 @@ router.route("/").post((req, res) => {
 
         req.body["id"] = results.rows[0].codeid;
         global.io.emit("codes", req.body); // send socket message
+        res.status(201).json(req.body);
+    });
+});
+
+/* PATCH REQUESTS */
+/**
+ * @api {patch} /codes/:id/Status Update a game status
+ * @apiName UpdateCodeStatus
+ * @apiVersion 1.0.0
+ * @apiGroup Codes
+ * @apiHeader (Needed Request Headers) {String} Content-Type application/json
+ * 
+ * @apiParam {Number} id the id of the code to change
+ * @apiParam {String} status is the new status of this code
+ *
+ * @apiParamExample {json} Request-Example:
+ *    PATCH /codes/1/Status
+{
+	"status": "READY"
+}
+ * @apiSuccess {Object} The changed game attributes
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 CREATED
+{
+    "status": "READY"
+}
+ */
+router.route("/:codeid/Status").patch((req, res) => {
+    global.pool.query("UPDATE Code SET Status=$1 WHERE CodeId=$2", [req.body.status, req.params['codeid']], 
+            (error, results) => {
+        if (error) {
+            throw error;
+
+        }
+
+        global.io.emit("games", {"type": "changed", "id":req.params['codeid']});
         res.status(201).json(req.body);
     });
 });

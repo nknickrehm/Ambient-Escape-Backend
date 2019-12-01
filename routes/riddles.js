@@ -135,6 +135,7 @@ router.route("/:riddleid/Codes").get((req, res) => {
  * @apiParam {String} status is the new status of this riddle
  *
  * @apiParamExample {json} Request-Example:
+ *    PATCH /codes/riddles/1/Status
 {
 	"status": "READY"
 }
