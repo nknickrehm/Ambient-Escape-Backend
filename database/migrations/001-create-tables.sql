@@ -62,9 +62,3 @@ CREATE TABLE Activity
   PRIMARY KEY
   (ActivityID)
 );
-
-INSERT INTO Game (
-  Status
-) VALUES (
-  'NOT STARTED'
-);
