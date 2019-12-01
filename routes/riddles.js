@@ -13,7 +13,7 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/names/:name").get((req, res) => {
-    global.pool.query("SELECT MAX(RiddleId) as RiddleId FROM Riddle WHERE Description=$1", [req.params['name']], (error, results) => {
+    global.pool.query("SELECT MAX(RiddleId) as RiddleId FROM Riddle WHERE Name=$1", [req.params['name']], (error, results) => {
         if (error) {
             throw error;
         }
