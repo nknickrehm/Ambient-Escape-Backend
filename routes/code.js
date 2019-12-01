@@ -14,13 +14,15 @@ router.route("/").get((req, res) => {
 
 /* POST REQUESTS */
 router.route("/").post((req, res) => {
-    global.pool.query("INSERT INTO Code (SenderRiddleID, ReceiverRiddleID, key, value, status) VALUES ($1, $2, $3, $4, $5)", 
+    global.pool.query("INSERT INTO Code (SenderRiddleID, ReceiverRiddleID, key, value, status) VALUES ($1, $2, $3, $4, $5) RETURNING CodeId", 
             [req.body.sender, req.body.receiver, req.body.key, req.body.value, req.body.status], (error, results) => {
         if (error) {
             throw error;
         }
+
+        req.body["id"] = results.rows[0].codeid;
         global.io.emit("codes", req.body); // send socket message
-        res.status(201).json({"id":results.insertId});
+        res.status(201).json(req.body);
     });
 });
 

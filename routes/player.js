@@ -14,12 +14,14 @@ router.route("/").get((req, res) => {
 
 /* POST REQUESTS */
 router.route("/").post((req, res) => {
-    global.pool.query("INSERT INTO Player (GameID, Name, Mail, Status) VALUES (1, $1, $2, 'test')", [req.body.name, req.body.mail], (error, results) => {
+    global.pool.query("INSERT INTO Player (GameID, Name, Mail, Status) VALUES (1, $1, $2, 'test') RETURNING PlayerId", [req.body.name, req.body.mail], (error, results) => {
         if (error) {
             throw error;
         }
+
+        req.body["id"] = results.rows[0].playerid;
         global.io.emit("players", req.body); // send socket message
-        res.status(201).json({"id":results.insertId});
+        res.status(201).json(req.body);
     });
 });
 

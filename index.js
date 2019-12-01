@@ -26,6 +26,7 @@ const colors = require("colors"); // allows for using colors as attribute of str
 
 const playerRoutes = require('./routes/player');
 const codeRoutes = require('./routes/code');
+const gameRoutes = require('./routes/game');
 
 const fileUpload = require("express-fileupload");
 
@@ -35,6 +36,7 @@ app.use(fileUpload());
 
 app.use('/players/', playerRoutes);
 app.use('/codes/', codeRoutes);
+app.use('/games/', gameRoutes);
 
 
  
