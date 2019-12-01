@@ -21,6 +21,7 @@ router.route("/").post((req, res) => {
         }
 
         //TODO: Stop all running games?
+        //TODO: Add Riddles
         req.body["id"] = results.rows[0].gameid;
         global.io.emit("games", req.body); // send socket message
         res.status(201).json(req.body);
@@ -33,7 +34,7 @@ router.route("/:gameid/Status").patch((req, res) => {
             (error, results) => {
         if (error) {
             throw error;
-            
+
         }
 
         global.io.emit("games", {"type": "changed", "id":req.params['gameid']});
