@@ -24,7 +24,7 @@ CREATE TABLE Riddle
   RiddleID SERIAL,
   GameID int NOT NULL REFERENCES Game (GameID) ON DELETE CASCADE,
   Progress int NOT NULL,
-  Description Varchar (255) NOT NULL,
+  Name Varchar (255) NOT NULL,
   Status Varchar (255) NOT NULL,
   PRIMARY KEY
   (RiddleID)
