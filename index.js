@@ -1,10 +1,16 @@
 const express = require("express");
 const app = express();
+global.app = app;
+
 const server = require("http").Server(app);
+global.server = server;
 const io = require("socket.io")(server);
+global.io = io;
+
 const bodyParser = require("body-parser");
 const ip = require("ip");
 const colors = require("colors"); // allows for using colors as attribute of strings
+const playerRoutes = require('./routes/player');
 
 const fileUpload = require("express-fileupload");
 
@@ -12,21 +18,10 @@ app.use(express.static("./public"));
 app.use(bodyParser.json());
 app.use(fileUpload());
 
-var players = [];
+app.use('/players/', playerRoutes);
 
-/* GET REQUESTS */
-app.get("/players", (req, res) => {
-    res.send(players);
-})
 
-/* POST REQUESTS */
-app.post("/players", (req, res) => {
-    players.push(req.body);
-
-    io.emit("players", req.body); // send socket message
-    res.send(req.body); // send response for this request
-})
-
+ 
 /* start server */
 var port = 8080;
 server.listen(port, () => {

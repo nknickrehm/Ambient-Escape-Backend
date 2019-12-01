@@ -4,7 +4,7 @@ socket.on("players", (playerData) => {
     console.log("Socket response:", playerData);
 })
 
-fetch("/players")
+fetch("/players/")
     .then(res => res.json())
     .then(players => {
         players.forEach(player => {
@@ -14,8 +14,9 @@ fetch("/players")
 
 /* FUNCTIONS */
 
+
 function submit() {
-    fetch("/players", {
+    fetch("/players/", {
         method: "POST",
         body: new FormData(document.querySelector("form"))
     })
