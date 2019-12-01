@@ -28,7 +28,7 @@ app.post("/players", (req, res) => {
 })
 
 /* start server */
-var port = 80;
+var port = 8080;
 server.listen(port, () => {
     console.log(`Server is running on ${ip.address().green}`);
 })
