@@ -51,7 +51,7 @@ router.route('/').get((req, res) => {
  * @apiSuccess {Object} StatusCode
  *
  * @apiSuccessExample Success-Response
- * HTTP/1.1 201 OK {"success": "added event to log"}
+ * HTTP/1.1 201 OK {"id": "30"}
  */
 router.route('/:riddleID').post(({body: {data, type}, params: {riddleID}}, res) => {
   // write into db
@@ -71,7 +71,7 @@ router.route('/:riddleID').post(({body: {data, type}, params: {riddleID}}, res) 
               throw err;
             } else {
               global.io.emit('newLogEntry', {groupID: rows[0].description, data, type});
-              return res.status(201).send({success: 'added event to log'});
+              return res.status(201).send({riddleeventid: result.rows[0].riddleeventid});
             }
           },
         );
