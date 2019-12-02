@@ -2,6 +2,44 @@ const {Router} = require('express');
 
 const router = Router();
 
+/* GET ROUTES*/
+/**
+ * @api {GET} /riddleEvent/ get all RiddleEvents
+ * @apiName GetRiddleEvent
+ * @apiVersion 1.0.0
+ * @apiGroup riddleEvents
+ *
+ * @apiSuccess {Array} Array of RiddleEvents
+ *
+ * @apiSuccessExample Success-Response
+ * HTTP/1.1 201 OK 
+ [
+  {
+    "riddleeventid": 1,
+    "riddleid": 1,
+    "type": "something",
+    "timestamp": "2019-12-02T11:28:01.336Z",
+    "data": "Karte s7 wurde eingelesen"
+},
+  {
+    "riddleeventid": 1,
+    "riddleid": 2,
+    "type": "something",
+    "timestamp": "2019-12-02T11:28:01.336Z",
+    "data": "Das Rätsel wurde gelöst"
+  },
+ ]
+ */
+router.route('/').get((req, res) => {
+  global.pool.query('SELECT * FROM RiddleEvent', [], (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      res.status(200).send(result.rows);
+    }
+  });
+});
+
 /* POST REQUESTS*/
 /**
  * @api {post} /riddleEvent/:riddleID Create a RiddleEvent
