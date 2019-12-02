@@ -61,19 +61,20 @@ router.route('/:riddleID').post(({body: {data, type}, params: {riddleID}}, res) 
     (err, result) => {
       if (err) {
         throw err;
-      }
-    },
-  );
-  // get riddle group and send response
-  global.pool.query(
-    'SELECT Description FROM Riddle WHERE RiddleID = $1',
-    [parseInt(riddleID)],
-    (err, {rows}) => {
-      if (err) {
-        throw err;
       } else {
-        global.io.emit('newLogEntry', {groupID: rows[0].description, data, type});
-        return res.status(201).send({success: 'added event to log'});
+        // get riddle group and send response
+        global.pool.query(
+          'SELECT Description FROM Riddle WHERE RiddleID = $1',
+          [parseInt(riddleID)],
+          (err, {rows}) => {
+            if (err) {
+              throw err;
+            } else {
+              global.io.emit('newLogEntry', {groupID: rows[0].description, data, type});
+              return res.status(201).send({success: 'added event to log'});
+            }
+          },
+        );
       }
     },
   );
