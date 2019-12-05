@@ -1,20 +1,19 @@
-const DatabaseHandler = require("./databaseHandler");
+const DatabaseHandler = require('./databaseHandler');
 
 const createGameQuery = {
-  text: "INSERT INTO Game (Status) VALUES ($1)",
-  values: ["NOT STARTED"]
+  text: 'INSERT INTO Game (Status) VALUES ($1)',
+  values: ['NOT STARTED'],
 };
 
 const createPlayerQuery = {
-  text:
-    "INSERT INTO Player (GameID, Name, Mail, Status) VALUES ($1, $2, $3, $4)",
-  values: [1, "Vorname", "test@test.de", "WAITING"]
+  text: 'INSERT INTO Player (GameID, Name, Mail, Status) VALUES ($1, $2, $3, $4)',
+  values: [1, 'Vorname', 'test@test.de', 'WAITING'],
 };
 
 const createRiddleQuery = {
   text:
-    "INSERT INTO Riddle (GameID, Progress, Name, Status) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8)",
-  values: [1, 0, "A", "WAITING", 1, 0, "B", "WAITING"]
+    'INSERT INTO Riddle (GameID, Progress, Name, Status) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8)',
+  values: [1, 0, 'A', 'WAITING', 1, 0, 'D', 'WAITING'],
 };
 
 seed();
