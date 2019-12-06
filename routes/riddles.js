@@ -169,8 +169,26 @@ router.route('/:riddleid/Status').patch((req, res) => {
   );
 });
 
+/* PATCH REQUESTS */
+/**
+ * @api {patch}/:riddleid/:gameid/progress/:progress? Update progress of a riddle
+ * @apiName UpdateRiddleProgress
+ * @apiVersion 1.0.0
+ * @apiGroup Riddles
+ * @apiHeader (Needed Request Headers) {String} Content-Type application/json
+ *
+ * @apiParam {Number} riddleid the id of the riddle to change
+ * @apiParam {Number} gameid the id of the game to change
+ * @apiQueryParam {Number} progress the progress set to
+ *
+ * @apiParamExample {json} Request-Example:
+ *    PATCH /codes/riddles/1/Status
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 CREATED
+ */
 router
-  .route('/:riddleid/:gameid/progress/:progress?')
+  .route('/:riddleid/:gameid/:progress?')
   .patch(async ({params: {riddleid, gameid}, query: {progress}}, res) => {
     const updatedRiddle = await global.pool.query(
       'UPDATE Riddle SET progress=$1 WHERE RiddleId=$2 AND gameid=$3',
@@ -181,7 +199,7 @@ router
       [riddleid, gameid],
     );
     global.io.emit('updateRiddleProgress', updatedGroup.rows[0]);
-    return res.status(200).end();
+    return res.status(201).end();
   });
 
 module.exports = router;
