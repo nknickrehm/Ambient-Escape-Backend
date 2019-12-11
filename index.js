@@ -15,7 +15,7 @@ const pool = new Pool({
   password: process.env.PGPASSWORD,
   host: process.env.PGHOST,
   port: parseInt(process.env.PGPORT),
-  database: process.env.PGDATABASE,
+  database: process.env.PGDATABASE
 });
 global.pool = pool;
 
@@ -23,11 +23,12 @@ const bodyParser = require('body-parser');
 const ip = require('ip');
 const colors = require('colors'); // allows for using colors as attribute of strings
 
-const playerRoutes = require('./routes/player');
+const playerRoutes = require('./routes/player'); 
 const codeRoutes = require('./routes/code');
 const gameRoutes = require('./routes/game');
 const riddleRoutes = require('./routes/riddles');
 const riddleEventRoutes = require('./routes/riddleEvents');
+const storylineRoutes = require('./routes/storyline');
 
 const fileUpload = require('express-fileupload');
 
@@ -40,6 +41,7 @@ app.use('/codes/', codeRoutes);
 app.use('/games/', gameRoutes);
 app.use('/riddles/', riddleRoutes);
 app.use('/riddleEvents', riddleEventRoutes);
+app.use('/storylines/', storylineRoutes);
 
 /* start server */
 var port = 8080;
