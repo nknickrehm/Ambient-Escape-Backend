@@ -59,14 +59,19 @@ router.route('/').get((req, res) => {
 }
  */
 router.route('/').post((req, res) => {
-  global.pool.query('INSERT INTO Storyline (storyline) VALUES ($1) RETURNING storylineid', 
-          [req.body.storyline], (error, results) => {
+  global.pool.query(
+    'INSERT INTO Storyline (storyline) VALUES ($1) RETURNING storylineid',
+    [req.body.storyline],
+    (error, results) => {
       if (error) {
-          throw error;
+        throw error;
       }
 
       req.body['id'] = results.rows[0].storylineid;
       global.io.emit('storylineSelected', req.body); // send socket message
       res.status(201).json(req.body);
-  });
+    },
+  );
 });
+
+module.exports = router;
