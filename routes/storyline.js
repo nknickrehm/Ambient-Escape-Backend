@@ -63,11 +63,14 @@ router.route('/').post((req, res) => {
   global.pool.query('INSERT INTO Storyline (gameid, storyline) VALUES ($1, $2) RETURNING storylineid', 
           [req.body.gameid, req.body.storyline], (error, results) => {
       if (error) {
-          throw error;
+        throw error;
       }
 
       req.body['id'] = results.rows[0].storylineid;
       global.io.emit('storylineSelected', req.body); // send socket message
       res.status(201).json(req.body);
-  });
+    },
+  );
 });
+
+module.exports = router;
