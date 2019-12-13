@@ -43,6 +43,7 @@ router.route('/').get((req, res) => {
  * @apiGroup Storyline
  * @apiHeader (Needed Request Headers) {String} Content-Type application/json
  *
+ * @apiParam {Int} the game id
  * @apiParam {Int} the storyline integer value
  *
  * @apiParamExample {json} Request-Example:
@@ -59,8 +60,8 @@ router.route('/').get((req, res) => {
 }
  */
 router.route('/').post((req, res) => {
-  global.pool.query('INSERT INTO Storyline (storyline) VALUES ($1) RETURNING storylineid', 
-          [req.body.storyline], (error, results) => {
+  global.pool.query('INSERT INTO Storyline (gameid, storyline) VALUES ($1, $2) RETURNING storylineid', 
+          [req.body.gameid, req.body.storyline], (error, results) => {
       if (error) {
           throw error;
       }
