@@ -31,10 +31,12 @@ const riddleEventRoutes = require('./routes/riddleEvents');
 const storylineRoutes = require('./routes/storyline');
 
 const fileUpload = require('express-fileupload');
+const cors = require("cors");
 
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(fileUpload());
+app.use(cors());
 
 app.use('/players/', playerRoutes);
 app.use('/codes/', codeRoutes);
