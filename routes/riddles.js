@@ -171,7 +171,7 @@ router.route('/:riddleid/Status').patch((req, res) => {
 
 /* PATCH REQUESTS */
 /**
- * @api {patch}/:riddleid/:gameid/progress/:progress? Update progress of a riddle
+ * @api {patch} /riddles/:riddleid/:gameid/progress/:progress? Update progress of a riddle
  * @apiName UpdateRiddleProgress
  * @apiVersion 1.0.0
  * @apiGroup Riddles
@@ -182,7 +182,7 @@ router.route('/:riddleid/Status').patch((req, res) => {
  * @apiQueryParam {Number} progress the progress set to
  *
  * @apiParamExample {json} Request-Example:
- *    PATCH /codes/riddles/1/Status
+ *    PATCH /codes/riddles/1/Progress
  *
  * @apiSuccessExample Success-Response:
  *    HTTP/1.1 201 CREATED
