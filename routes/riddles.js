@@ -171,25 +171,35 @@ router.route('/:riddleid/Status').patch((req, res) => {
 
 /* PATCH REQUESTS */
 /**
- * @api {patch} /riddles/:riddleid/:gameid/progress/:progress? Update progress of a riddle
+ * @api {patch} /riddles/:riddleid/progress/:progress? Update progress of a riddle
  * @apiName UpdateRiddleProgress
  * @apiVersion 1.0.0
  * @apiGroup Riddles
  * @apiHeader (Needed Request Headers) {String} Content-Type application/json
  *
  * @apiParam {Number} riddleid the id of the riddle to change
- * @apiParam {Number} gameid the id of the game to change
  * @apiQueryParam {Number} progress the progress set to
  *
  * @apiParamExample {json} Request-Example:
- *    PATCH /codes/riddles/1/Progress
+ *    PATCH /riddles/1/progress/80
  *
  * @apiSuccessExample Success-Response:
  *    HTTP/1.1 201 CREATED
  */
 router
-  .route('/:riddleid/:gameid/:progress?')
-  .patch(async ({params: {riddleid, gameid}, query: {progress}}, res) => {
+  .route('/:riddleid/progress/:progress?')
+  .patch(async ({params: {riddleid}, query: {progress}}, res) => {
+    let gameid;
+    try{
+      const {rows} = await global.pool.query(
+        'SELECT  GameId from Game ORDER BY GameId DESC LIMIT 1',
+        []);
+        gameid = rows[0].gameid;
+        
+    }catch(err){
+      throw err;
+    }
+    console.log(gameid);
     const updatedRiddle = await global.pool.query(
       'UPDATE Riddle SET progress=$1 WHERE RiddleId=$2 AND gameid=$3',
       [progress, riddleid, gameid],
@@ -198,7 +208,7 @@ router
       'SELECT name, progress FROM Riddle WHERE RiddleId=$1 AND GameId=$2',
       [riddleid, gameid],
     );
-    global.io.emit('updateRiddleProgress', updatedGroup.rows[0]);
+    global.io.emit('riddles/updateProgress', updatedGroup.rows[0]);
     return res.status(201).end();
   });
 

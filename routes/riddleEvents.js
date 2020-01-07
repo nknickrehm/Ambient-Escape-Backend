@@ -58,6 +58,7 @@ router.route('/:riddleID').post(async ({body: {data, type}, params: {riddleID}},
   let insertResult;
   let newTimestamp;
   let newRiddleEventGroup;
+ 
   // insert the new event into the db
   try {
     insertResult = await global.pool.query(
