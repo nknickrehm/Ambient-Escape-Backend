@@ -171,7 +171,7 @@ router.route('/:riddleid/Status').patch((req, res) => {
 
 /* PATCH REQUESTS */
 /**
- * @api {patch}/:riddleid/:gameid/progress/:progress? Update progress of a riddle
+ * @api {patch} /riddles/:riddleid/progress/:progress? Update progress of a riddle
  * @apiName UpdateRiddleProgress
  * @apiVersion 1.0.0
  * @apiGroup Riddles
@@ -181,15 +181,15 @@ router.route('/:riddleid/Status').patch((req, res) => {
  * @apiQueryParam {Number} progress the progress set to
  *
  * @apiParamExample {json} Request-Example:
- *    PATCH /riddles/:riddleid/:progress
+ *    PATCH /riddles/1/progress/80
  *
  * @apiSuccessExample Success-Response:
  *    HTTP/1.1 201 CREATED
  */
 router
-  .route('/:riddleid/:progress?')
+  .route('/:riddleid/progress/:progress?')
   .patch(async ({params: {riddleid}, query: {progress}}, res) => {
-    // let gameid;
+    let gameid;
     try{
       const {rows} = await global.pool.query(
         'SELECT  GameId from Game WHERE Status=$1 ORDER BY GameId DESC LIMIT 1',
