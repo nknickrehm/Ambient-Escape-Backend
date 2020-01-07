@@ -7,6 +7,7 @@ global.app = app;
 const server = require('http').Server(app);
 global.server = server;
 const io = require('socket.io')(server);
+io.origins("*:*");
 global.io = io;
 
 const Pool = require('pg').Pool;
