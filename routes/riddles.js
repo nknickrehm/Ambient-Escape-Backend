@@ -178,18 +178,28 @@ router.route('/:riddleid/Status').patch((req, res) => {
  * @apiHeader (Needed Request Headers) {String} Content-Type application/json
  *
  * @apiParam {Number} riddleid the id of the riddle to change
- * @apiParam {Number} gameid the id of the game to change
  * @apiQueryParam {Number} progress the progress set to
  *
  * @apiParamExample {json} Request-Example:
- *    PATCH /codes/riddles/1/Status
+ *    PATCH /riddles/:riddleid/:progress
  *
  * @apiSuccessExample Success-Response:
  *    HTTP/1.1 201 CREATED
  */
 router
-  .route('/:riddleid/:gameid/:progress?')
-  .patch(async ({params: {riddleid, gameid}, query: {progress}}, res) => {
+  .route('/:riddleid/:progress?')
+  .patch(async ({params: {riddleid}, query: {progress}}, res) => {
+    // let gameid;
+    try{
+      const {rows} = await global.pool.query(
+        'SELECT  GameId from Game WHERE Status=$1 ORDER BY GameId DESC LIMIT 1',
+        ['NOT STARTED']);
+        gameid = rows[0].gameid;
+        
+    }catch(err){
+      throw err;
+    }
+    console.log(gameid);
     const updatedRiddle = await global.pool.query(
       'UPDATE Riddle SET progress=$1 WHERE RiddleId=$2 AND gameid=$3',
       [progress, riddleid, gameid],
