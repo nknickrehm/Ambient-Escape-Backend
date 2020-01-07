@@ -208,7 +208,7 @@ router
       'SELECT name, progress FROM Riddle WHERE RiddleId=$1 AND GameId=$2',
       [riddleid, gameid],
     );
-    global.io.emit('updateRiddleProgress', updatedGroup.rows[0]);
+    global.io.emit('riddles/updateProgress', updatedGroup.rows[0]);
     return res.status(201).end();
   });
 
