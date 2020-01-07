@@ -192,8 +192,8 @@ router
     let gameid;
     try{
       const {rows} = await global.pool.query(
-        'SELECT  GameId from Game WHERE Status=$1 ORDER BY GameId DESC LIMIT 1',
-        ['NOT STARTED']);
+        'SELECT  GameId from Game ORDER BY GameId DESC LIMIT 1',
+        []);
         gameid = rows[0].gameid;
         
     }catch(err){
