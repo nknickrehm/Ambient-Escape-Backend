@@ -163,7 +163,7 @@ router.route('/:riddleid/Status').patch((req, res) => {
       }
 
       //TODO: Check ready state conditions (e.g. are all riddles completed?)
-      global.io.emit('riddles', {type: 'changed', id: req.params['riddleid']});
+      global.io.emit('riddles', { type: 'changed', id: req.params['riddleid'] });
       res.status(201).json(req.body);
     },
   );
@@ -181,25 +181,25 @@ router.route('/:riddleid/Status').patch((req, res) => {
  * @apiQueryParam {Number} progress the progress set to
  *
  * @apiParamExample {json} Request-Example:
- *    PATCH /riddles/1/progress/80
+ *    PATCH /riddles/2/progress/?progress=80
  *
  * @apiSuccessExample Success-Response:
  *    HTTP/1.1 201 CREATED
  */
 router
   .route('/:riddleid/progress/:progress?')
-  .patch(async ({params: {riddleid, progress}}, res) => {
+  .patch(async ({ params: { riddleid }, query: { progress } }, res) => {
     let gameid;
-    try{
-      const {rows} = await global.pool.query(
+    try {
+      const { rows } = await global.pool.query(
         'SELECT  GameId from Game ORDER BY GameId DESC LIMIT 1',
-        []);
-        gameid = rows[0].gameid;
-        
-    }catch(err){
+        [],
+      );
+      gameid = rows[0].gameid;
+    } catch (err) {
       throw err;
     }
-
+    console.log(gameid);
     const updatedRiddle = await global.pool.query(
       'UPDATE Riddle SET progress=$1 WHERE RiddleId=$2 AND gameid=$3',
       [progress, riddleid, gameid],
@@ -209,7 +209,7 @@ router
       [riddleid, gameid],
     );
     global.io.emit('riddles/updateProgress', updatedGroup.rows[0]);
-    return res.status(201).json(progress);
+    return res.status(201).end();
   });
 
 module.exports = router;
