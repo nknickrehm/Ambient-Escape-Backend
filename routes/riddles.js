@@ -209,7 +209,7 @@ router
       [riddleid, gameid],
     );
     global.io.emit('riddles/updateProgress', updatedGroup.rows[0]);
-    return res.status(201).end();
+    return res.status(201).json(progress);
   });
 
 module.exports = router;
