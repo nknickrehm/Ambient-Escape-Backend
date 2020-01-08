@@ -188,7 +188,7 @@ router.route('/:riddleid/Status').patch((req, res) => {
  */
 router
   .route('/:riddleid/progress/:progress?')
-  .patch(async ({params: {riddleid}, query: {progress}}, res) => {
+  .patch(async ({params: {riddleid, progress}}, res) => {
     let gameid;
     try{
       const {rows} = await global.pool.query(
@@ -199,7 +199,7 @@ router
     }catch(err){
       throw err;
     }
-    console.log(gameid);
+
     const updatedRiddle = await global.pool.query(
       'UPDATE Riddle SET progress=$1 WHERE RiddleId=$2 AND gameid=$3',
       [progress, riddleid, gameid],
