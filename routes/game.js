@@ -54,6 +54,12 @@ router.route('/').get((req, res) => {
 }
  */
 router.route('/').post((req, res) => {
+  // stop all running games / set all running games to finished
+  global.pool.query('UPDATE GAME SET status=$1 WHERE status=$2 OR status=$3', [
+    'FINISHED',
+    'NOT STARTED',
+    'STARTED',
+  ]);
   global.pool.query(
     "INSERT INTO Game (Status) VALUES ('NOT STARTED') RETURNING GameId",
     [],
@@ -62,27 +68,41 @@ router.route('/').post((req, res) => {
         throw error;
       }
 
-      //TODO: Stop all running games?
-
       const gameid = results.rows[0].gameid;
 
       // Create riddle instances for the new game instance
       global.pool.query(
-        "INSERT INTO Riddle (GameID, Progress, Name, Status) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8), ($9, $10, $11, $12), ($13, $14, $15, $16)",
-        [gameid, 0, 'A', 'WAITING', gameid, 0, 'D', 'WAITING', gameid, 0, 'E', 'WAITING', gameid, 0, 'F', 'WAITING'],
+        'INSERT INTO Riddle (GameID, Progress, Name, Status) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8), ($9, $10, $11, $12), ($13, $14, $15, $16)',
+        [
+          gameid,
+          0,
+          'A',
+          'WAITING',
+          gameid,
+          0,
+          'D',
+          'WAITING',
+          gameid,
+          0,
+          'E',
+          'WAITING',
+          gameid,
+          0,
+          'F',
+          'WAITING',
+        ],
         (error, results) => {
           if (error) {
             throw error;
           }
-
-        }
+        },
       );
 
       req.body['id'] = results.rows[0].gameid;
       console.log('emit');
       global.io.emit('games', req.body); // send socket message
       res.status(201).json(req.body);
-    }
+    },
   );
 });
 
@@ -119,7 +139,7 @@ router.route('/:gameid/Status').patch((req, res) => {
         throw error;
       }
 
-      global.io.emit('games', {type: 'changed', id: req.params['gameid']});
+      global.io.emit('games', { type: 'changed', id: req.params['gameid'] });
       res.status(201).json(req.body);
     },
   );
