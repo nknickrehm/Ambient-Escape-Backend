@@ -7,7 +7,7 @@ global.app = app;
 const server = require('http').Server(app);
 global.server = server;
 const io = require('socket.io')(server);
-io.origins("*:*");
+io.origins('*:*');
 global.io = io;
 
 const Pool = require('pg').Pool;
@@ -32,7 +32,7 @@ const riddleEventRoutes = require('./routes/riddleEvents');
 const storylineRoutes = require('./routes/storyline');
 
 const fileUpload = require('express-fileupload');
-const cors = require("cors");
+const cors = require('cors');
 
 app.use(express.static('./public'));
 app.use(bodyParser.json());
@@ -49,5 +49,5 @@ app.use('/storylines/', storylineRoutes);
 /* start server */
 var port = 8080;
 server.listen(port, () => {
-  console.log(`Server is running on ${ip.address().green}`);
+  console.log(`Server is running on \x1b[32mhttp://${ip.address()}:${port}\x1b[0m`);
 });
