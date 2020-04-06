@@ -47,9 +47,9 @@ router.route('/').get((req, res) => {
  * @apiHeader (Needed Request Headers) {String} Content-Type application/json
  *
  * @apiParam {String} name the name of the riddle to search
- * 
+ *
  * @apiSuccess {Array} An array of Riddles
- *  
+ *
  * @apiError 404 A riddle with this name was not found
  * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 404 Not Found
@@ -88,7 +88,7 @@ router.route('/names/:name').get((req, res) => {
  * @apiHeader (Needed Request Headers) {String} Content-Type application/json
  *
  * @apiParam {Number} riddleid the id of the riddle to search for
- * 
+ *
  * @apiSuccess {Array} An array of Codes
  *
  * @apiSuccessExample Success-Response:
@@ -136,7 +136,7 @@ router.route('/:riddleid/Codes').get((req, res) => {
  * @apiVersion 1.0.0
  * @apiGroup Riddles
  * @apiHeader (Needed Request Headers) {String} Content-Type application/json
- * 
+ *
  * @apiParam {Number} riddleid the id of the riddle to change
  * @apiParam {String} status is the new status of this riddle
  *
@@ -200,10 +200,17 @@ router
       throw err;
     }
     console.log(gameid);
-    const updatedRiddle = await global.pool.query(
+
+    /*const updatedRiddle = await global.pool.query(
       'UPDATE Riddle SET progress=$1 WHERE RiddleId=$2 AND gameid=$3',
       [progress, riddleid, gameid],
+    );*/
+
+    const updatedRiddle = await global.pool.query(
+      'UPDATE Riddle SET progress=$1, gameid=$2 WHERE RiddleId=$3',
+      [progress, gameid, riddleid],
     );
+
     const updatedGroup = await global.pool.query(
       'SELECT name, progress FROM Riddle WHERE RiddleId=$1 AND GameId=$2',
       [riddleid, gameid],
